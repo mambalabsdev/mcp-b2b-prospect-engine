@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.14.0",
-    "typescript": "^5.6.0"
+    "typescript": "^7.0.2"
   },
   "mcpServers": ".mcp.json",
   "mcpName": "com.mambabuilt/mcp-b2b-prospect-engine"
