@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "mamba-b2b-prospect-engine": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@mambalabsdev/mcp-b2b-prospect-engine"
+      ],
+      "env": {
+        "APIFY_TOKEN": "your-apify-token"
+      }
+    }
+  }
+}

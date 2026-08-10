@@ -1,0 +1,54 @@
+{
+  "name": "@mambalabsdev/mcp-b2b-prospect-engine",
+  "displayName": "Prospect Engine",
+  "version": "1.0.0",
+  "description": "MCP server for the Mamba Labs Prospect Engine actor on Apify. Turns a domain or a hiring keyword into enriched company records and verified contacts, with ICP scoring and per field provenance.",
+  "type": "module",
+  "bin": {
+    "mcp-b2b-prospect-engine": "./build/index.js"
+  },
+  "scripts": {
+    "build": "tsc && chmod +x build/index.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "prospecting",
+    "enrichment",
+    "apify",
+    "clay"
+  ],
+  "tags": [
+    "mcp",
+    "prospecting",
+    "enrichment",
+    "apify",
+    "clay"
+  ],
+  "category": "productivity",
+  "author": {
+    "name": "Mamba Labs",
+    "email": "labs@mambamindsetgrowth.com"
+  },
+  "license": "MIT",
+  "logo": "https://mmg-brand-assets.netlify.app/apify-actor-pngs/apify_webhook.png",
+  "homepage": "https://mambabuilt.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mambalabsdev/mcp-b2b-prospect-engine"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "typescript": "^5.6.0"
+  },
+  "mcpServers": ".mcp.json",
+  "mcpName": "com.mambabuilt/mcp-b2b-prospect-engine"
+}
