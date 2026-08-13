@@ -1,12 +1,18 @@
 {
   "name": "@mambalabsdev/mcp-b2b-prospect-engine",
   "displayName": "Prospect Engine",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "MCP server for the Mamba Labs Prospect Engine actor on Apify. Turns a domain or a hiring keyword into enriched company records and verified contacts, with ICP scoring and per field provenance.",
   "type": "module",
   "bin": {
     "mcp-b2b-prospect-engine": "./build/index.js"
   },
+  "files": [
+    "build",
+    "README.md",
+    "LICENSE",
+    "SECURITY.md"
+  ],
   "scripts": {
     "build": "tsc && chmod +x build/index.js",
     "prepublishOnly": "npm run build"
