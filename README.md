@@ -61,7 +61,7 @@ Four modes in one actor: enrich companies you already have, discover who is hiri
 | `include_email` | string | no | true to run the email waterfall. Needs an Icypeas or Prospeo key, which you supply and are billed for directly. |
 | `verify_email` | string | no | true to verify each address. Needs a Reoon or BounceBan key. |
 | `score_icp` | string | no | true to score every row against the ICP rules and tier it A to D. |
-| `icp_preset` | enum | no | Which scoring model to apply. "proofed_editorial" scores for a seller of managed copy editing and proofreading. "generic_b2b" scores on hiring intent, employer resolvability and headcount with no service-specific vocabulary. |
+| `icp_preset` | enum | no | Which scoring model to apply. "editorial_services" scores for a seller of managed copy editing and proofreading. "generic_b2b" scores on hiring intent, employer resolvability and headcount with no service-specific vocabulary. |
 | `min_icp_score` | string | no | In full mode, only companies scoring at or above this go on to contact discovery. Default 45: at 25 the filter passed every keyword-discovered editorial posting, because 25 is the floor such a posting can score. |
 | `extra_exclude_names` | array | no | Any company whose name contains one of these is excluded. |
 | `signal_taxonomy` | array | no | Override the default signal types. Each entry is an object with type, strength, title_keywords, and optional also_keywords and description_keywords. |
