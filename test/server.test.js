@@ -19,7 +19,7 @@ const ACTOR_INPUTS = ["bounceban_api_key","brand_voice","claude_api_key","compan
 const TOOL_INPUTS = ["bounceban_api_key","brand_voice","claude_api_key","company_concurrency","company_names","company_size_max","company_size_min","contact_concurrency","country","deny_tokens","departments","domains","exclude_marketplaces","exclude_staffing","extra_exclude_names","extra_marketplaces","fetch_posting_page","findymail_api_key","icp_preset","icypeas_api_key","include_email","include_social","job_titles","keywords","location","lookback_days","max_pages","max_results","max_spend_usd","min_icp_score","mode","new_postings_only","personalize","previous_run_date","prospeo_api_key","remote_only","score_icp","seniority","serpapi_key","serper_api_key","signal_taxonomy","skip_cache","source_timeout_secs","target_contacts","target_roles","verify_email","verify_position"];
 const TOOL_REQUIRED = [];
 const SAMPLE_ARGS = {"mode":"enrich_companies","domains":["stripe.com"]};
-const RUN_QUERY = "";
+const RUN_QUERY = "?timeout=1800";
 
 // Speak MCP over stdio to the built server. extraEnv and preload let a test
 // swap in the fake Apify API from helpers/mock-fetch.mjs.
