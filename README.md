@@ -36,49 +36,57 @@ Four modes in one actor: enrich companies you already have, discover who is hiri
 
 | Input | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `mode` | enum | no | What to run. enrich_companies resolves identity, firmographics, LinkedIn and social for each company. discover_jobs finds who is hiring for your keywords and resolves the real employer from the job description. find_contacts finds people at each company. full chains all three. |
+| `mode` | enum | no | What to run. enrich_companies resolves identity, firmographics, LinkedIn and social for each company. discover_jobs finds who is hiring for your keywords and resolves the real employer from the job description. find_contacts finds people at each company. full chains all three. Default: "enrich_companies". One of: `enrich_companies`, `discover_jobs`, `find_contacts`, `full`. |
 | `domains` | array | no | One domain per line. Used by enrich_companies and find_contacts. |
 | `company_names` | array | no | One name per line. Used when you have a name but no domain. |
-| `keywords` | array | no | Roles to search for. Used by discover_jobs and full. Example: copy editor, proofreader, content editor. |
-| `country` | string | no | Two letter country code for job search, for example us or gb. |
+| `keywords` | array | no | Roles to search for. Used by discover_jobs and full. Example: copy editor, proofreader, content editor. Default: ["copy editor", "proofreader", "content editor"]. |
+| `country` | string | no | Two letter country code for job search, for example us or gb. Default: "us". |
 | `location` | string | no | Optional location filter for job search, for example New York. |
-| `lookback_days` | string | no | Drop postings older than this many days. Sent as a string because Clay sends every field as a string. |
-| `max_results` | string | no | Cap on postings returned per run. Keeps a broad keyword set from running away. |
-| `max_pages` | string | no | 1 to 5. Each page is one SerpAPI call, so this is the main cost dial on discovery. |
-| `new_postings_only` | string | no | true to return only postings not seen in a previous run. |
+| `lookback_days` | string | no | Drop postings older than this many days. Sent as a string because Clay sends every field as a string. Default: "30". |
+| `max_results` | string | no | Cap on postings returned per run. Keeps a broad keyword set from running away. Default: "25". |
+| `max_pages` | string | no | 1 to 5. Each page is one SerpAPI call, so this is the main cost dial on discovery. Default: "1". |
+| `new_postings_only` | string | no | true to return only postings not seen in a previous run. Default: "false". |
 | `previous_run_date` | string | no | YYYY-MM-DD watermark for delta detection when the cross-run cache is unavailable. |
-| `remote_only` | string | no | true to keep only postings flagged remote by the board. |
+| `remote_only` | string | no | true to keep only postings flagged remote by the board. Default: "false". |
 | `company_size_min` | string | no | Drop companies below this headcount. Only takes effect once headcount is known, so it applies in full mode and to any discovery row that carried an employee count. Discovery alone does not enrich. |
 | `company_size_max` | string | no | Drop companies above this headcount. Same condition as the minimum. |
-| `exclude_staffing` | string | no | true to drop postings from staffing and recruitment agencies. |
-| `exclude_marketplaces` | string | no | true to drop Upwork, Fiverr, Freelancer and similar gig listings. |
+| `exclude_staffing` | string | no | true to drop postings from staffing and recruitment agencies. Default: "true". |
+| `exclude_marketplaces` | string | no | true to drop Upwork, Fiverr, Freelancer and similar gig listings. Default: "true". |
 | `extra_marketplaces` | array | no | Additional marketplace names to filter out. |
-| `fetch_posting_page` | string | no | true to open the job posting when the description alone does not identify the employer. Slower, and it is what catches a job board posting on an employer's behalf. |
-| `target_contacts` | string | no | 1 to 25. |
+| `fetch_posting_page` | string | no | true to open the job posting when the description alone does not identify the employer. Slower, and it is what catches a job board posting on an employer's behalf. Default: "true". |
+| `target_contacts` | string | no | 1 to 25. Default: "3". |
+| `target_roles` | array | no | Only enrich contacts whose title plausibly matches one of these roles. Filters after discovery and before any paid email lookup, so a non-matching contact costs nothing. Leave empty to keep every contact the seniority and department filters allow. |
+| `deny_tokens` | array | no | Whole words that disqualify a contact even when the title matched a target role, for example product refuses Product Owner and keeps Production Editor. Applies even when no target roles are set. |
+| `company_concurrency` | string | no | How many companies to work at once. Simultaneous provider calls are this times contact_concurrency; 6 x 3 = 18 sits under the tightest documented provider ceiling. Default: "6". |
+| `contact_concurrency` | string | no | How many contacts to enrich at once within one company. The email waterfall itself always runs in order. Default: "3". |
+| `max_spend_usd` | string | no | Stop making paid vendor calls once this much of your own vendor spend (Findymail, Icypeas, Prospeo, BounceBan) is committed, and return everything completed so far. Caps your vendor bills, not the Apify charge for this actor. Leave empty for no cap. |
 | `job_titles` | array | no | Titles to search for when finding contacts. |
 | `seniority` | array | no | c_level, vp, director, manager, senior. |
 | `departments` | array | no | marketing, sales, engineering, product, finance, hr, operations, legal. |
-| `include_email` | string | no | true to run the email waterfall. Needs an Icypeas or Prospeo key, which you supply and are billed for directly. |
-| `verify_email` | string | no | true to verify each address. Needs a Reoon or BounceBan key. |
-| `score_icp` | string | no | true to score every row against the ICP rules and tier it A to D. |
-| `icp_preset` | enum | no | Which scoring model to apply. "editorial_services" scores for a seller of managed copy editing and proofreading. "generic_b2b" scores on hiring intent, employer resolvability and headcount with no service-specific vocabulary. |
-| `min_icp_score` | string | no | In full mode, only companies scoring at or above this go on to contact discovery. Default 45: at 25 the filter passed every keyword-discovered editorial posting, because 25 is the floor such a posting can score. |
+| `include_email` | string | no | true to run the email waterfall. Needs an Icypeas or Prospeo key, which you supply and are billed for directly. Default: "false". |
+| `verify_email` | string | no | true to verify each address. Needs a BounceBan key. Default: "true". |
+| `verify_position` | string | no | true to ask a model whether each contact's title on record is consistent and plausibly current, from the supplied evidence only. Needs claude_api_key; skipped without it. Contacts found on the company's own website are skipped. Default: "true". |
+| `personalize` | string | no | true to write a one or two sentence opener per contact that has an address, referencing something specific about the company. Needs claude_api_key; skipped without it. Default: "true". |
+| `brand_voice` | string | no | How the opener should sound. Leave empty and it writes plainly and directly. |
+| `score_icp` | string | no | true to score every row against the ICP rules and tier it A to D. Default: "true". |
+| `icp_preset` | enum | no | Which scoring model to apply. "editorial_services" scores for a seller of managed copy editing and proofreading. "generic_b2b" scores on hiring intent, employer resolvability and headcount with no service-specific vocabulary. Default: "editorial_services". One of: `editorial_services`, `generic_b2b`. |
+| `min_icp_score` | string | no | In full mode, only companies scoring at or above this go on to contact discovery. Default 45: at 25 the filter passed every keyword-discovered editorial posting, because 25 is the floor such a posting can score. Default: "45". |
 | `extra_exclude_names` | array | no | Any company whose name contains one of these is excluded. |
 | `signal_taxonomy` | array | no | Override the default signal types. Each entry is an object with type, strength, title_keywords, and optional also_keywords and description_keywords. |
-| `include_social` | string | no | true to resolve Facebook, Instagram, X and YouTube alongside LinkedIn. |
-| `source_timeout_secs` | string | no | 5 to 120. A source that exceeds this is marked degraded and the run continues. |
-| `skip_cache` | string | no | true to ignore the 7 day cross-run cache and recompute everything. |
+| `include_social` | string | no | true to resolve Facebook, Instagram, X and YouTube alongside LinkedIn. Default: "true". |
+| `source_timeout_secs` | string | no | 5 to 120. A source that exceeds this is marked degraded and the run continues. Default: "30". |
+| `skip_cache` | string | no | true to ignore the 7 day cross-run cache and recompute everything. Default: "false". |
 | `serper_api_key` | string | no | Your Serper.dev key. Powers people search in find_contacts, which is the highest-coverage layer. Without it the free fallback is measurably poor. |
 | `findymail_api_key` | string | no | Your Findymail key. First provider in the email waterfall. |
 | `icypeas_api_key` | string | no | Your Icypeas key. Runs on Findymail misses. |
 | `prospeo_api_key` | string | no | Your Prospeo key. Runs on the residual after Findymail and Icypeas. |
-| `reoon_api_key` | string | no | Your Reoon key. First email verification provider. |
 | `bounceban_api_key` | string | no | Your BounceBan key. Second verifier, used for the catch-all case. |
 | `serpapi_key` | string | no | Your SerpApi key. Required by discover_jobs and full. Distinct from a Serper key: different vendor. |
+| `claude_api_key` | string | no | Your own Anthropic key, used for position verification and the personalized opener. Both steps are skipped when it is absent. Never stored. |
 
 ## Billing
 
-You are charged per company enriched, per contact verified and per job posting discovered, at different rates for basic and full enrichment. Vendor API calls are billed to you by those vendors directly.
+You are charged per company enriched, per contact verified and per job posting discovered, at different rates for basic and full enrichment. Vendor API calls are billed to you by those vendors directly. Set `max_spend_usd` to cap that vendor spend per run, and `target_roles` to skip paid lookups for contacts outside the roles you want. `verify_position` and `personalize` run on your own Anthropic key (`claude_api_key`) and are skipped without it.
 
 Pricing is on the [actor's Apify page](https://apify.com/mambalabs/b2b-prospect-engine). Running this server consumes Apify credits.
 
@@ -88,8 +96,10 @@ It is a thin client for the Apify actor. It passes your input through and return
 
 Errors are surfaced, never swallowed. An invalid input, an invalid token, an exhausted balance, a timeout, or a run that returns anything other than a dataset all come back as an explicit tool error rather than as an empty result.
 
+The tool starts the actor run and polls it to a finished status, so a long run is not cut off at 300 seconds. If the run is still going after 30 minutes, the call stops waiting and returns the run ID with a link to it in the Apify Console, where the results land when it finishes. A run that does not succeed comes back as an error with its run ID and status. A `full` or `find_contacts` run over many companies can take several minutes, which is why this matters here.
+
 ## Source
 
-The actor is on the [Apify Store]( https://apify.com/mambalabs/b2b-prospect-engine). This wrapper is [MIT licensed](LICENSE).
+The actor is on the [Apify Store](https://apify.com/mambalabs/b2b-prospect-engine). This wrapper is [MIT licensed](LICENSE).
 
 Built by [Mamba Labs](https://apify.com/mambalabs)
