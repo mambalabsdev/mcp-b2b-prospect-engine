@@ -209,6 +209,7 @@ server.registerTool(
       openWorldHint: true,
     },
     inputSchema: {
+      max_charge_usd: z.number().min(0).optional().describe("Optional. The actor's own spend cap for this run, in USD. The run stops before a charge would take its total past this amount, writes one notice row saying so, and keeps every row already charged. Leave it empty for no cap of your own; the maximum cost per run set in Apify is honored either way."),
     mode: z.enum(["enrich_companies", "discover_jobs", "find_contacts", "full"]).optional().describe("What to run. enrich_companies resolves identity, firmographics, LinkedIn and social for each company. discover_jobs finds who is hiring for your keywords and resolves the real employer from the job description. find_contacts finds people at each company. full chains all three. Default: \"enrich_companies\"."),
     domains: z.array(z.string()).optional().describe("One domain per line. Used by enrich_companies and find_contacts."),
     company_names: z.array(z.string()).optional().describe("One name per line. Used when you have a name but no domain."),
