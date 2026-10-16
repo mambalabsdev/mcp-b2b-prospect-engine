@@ -88,6 +88,22 @@ Four modes in one actor: enrich companies you already have, discover who is hiri
 
 You are charged per company enriched, per contact verified and per job posting discovered, at different rates for basic and full enrichment. Vendor API calls are billed to you by those vendors directly. Set `max_spend_usd` to cap that vendor spend per run, and `target_roles` to skip paid lookups for contacts outside the roles you want. `verify_position` and `personalize` run on your own Anthropic key (`claude_api_key`) and are skipped without it.
 
+Price per event on the Apify FREE plan, from the live pricing record; paid Apify plans pay less per event.
+
+| Event | Price (USD) |
+| --- | --- |
+| Company enriched, basic (`company-enriched-basic`) | 0.02 |
+| Company enriched, full (`company-enriched-full`) | 0.08 |
+| Contact verified (`contact-verified`) | 0.015 |
+| Job posting discovered (`job-posting-discovered`) | 0.01 |
+| Company enriched, basic, chained run (`company-enriched-basic-composed`) | 0.015 |
+| Company enriched, full, chained run (`company-enriched-full-composed`) | 0.06 |
+| Contact verified, chained run (`contact-verified-composed`) | 0.01125 |
+| Job posting discovered, chained run (`job-posting-discovered-composed`) | 0.0075 |
+| Company enriched, full, reserved rate (`company-enriched-full-founding`) | 0.05 |
+| Contact verified, reserved rate (`contact-verified-founding`) | 0.009 |
+| Job posting discovered, reserved rate (`job-posting-discovered-founding`) | 0.005 |
+
 Pricing is on the [actor's Apify page](https://apify.com/mambalabs/b2b-prospect-engine). Running this server consumes Apify credits.
 
 ## What this server does and does not do
