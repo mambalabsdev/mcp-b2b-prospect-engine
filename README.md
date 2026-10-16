@@ -60,6 +60,7 @@ Four modes in one actor: enrich companies you already have, discover who is hiri
 | `company_concurrency` | string | no | How many companies to work at once. Simultaneous provider calls are this times contact_concurrency; 6 x 3 = 18 sits under the tightest documented provider ceiling. Default: "6". |
 | `contact_concurrency` | string | no | How many contacts to enrich at once within one company. The email waterfall itself always runs in order. Default: "3". |
 | `max_spend_usd` | string | no | Stop making paid vendor calls once this much of your own vendor spend (Findymail, Icypeas, Prospeo, BounceBan) is committed, and return everything completed so far. Caps your vendor bills, not the Apify charge for this actor. Leave empty for no cap. |
+| `max_charge_usd` | number | no | Your cap on this actor's Apify charge for the run, in USD. A charge that would cross it is not made, the run stops, and one notice row says so. Separate from `max_spend_usd`, which caps your own vendor bills. |
 | `job_titles` | array | no | Titles to search for when finding contacts. |
 | `seniority` | array | no | c_level, vp, director, manager, senior. |
 | `departments` | array | no | marketing, sales, engineering, product, finance, hr, operations, legal. |
