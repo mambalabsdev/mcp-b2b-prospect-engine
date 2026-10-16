@@ -203,7 +203,7 @@ server.registerTool(
       "A composed prospecting actor with four modes. enrich_companies resolves identity, firmographics, LinkedIn and social for each domain or company name you supply, and needs no vendor key at all. discover_jobs finds who is hiring for your keywords and resolves the real employer behind each posting, including postings a job board placed on an employer's behalf. find_contacts finds people at the companies you name, with optional email discovery and verification. full runs discovery, enrichment, ICP scoring and then contact discovery, passing only the companies at or above min_icp_score through to the contact stage. Every row comes back flat and Clay ready with per field provenance. Vendor keys are yours: you supply them, those vendors bill you directly, and the per event price covers the actor only. discover_jobs and full require a SerpApi key, which is a different vendor from the Serper key that powers people search. Use it when you need companies, hiring signals, or contacts in one flat table. Do not use it to verify a single email you already have (that is the Work Email Waterfall) or to score a list you already enriched (that is the ICP Fit Scorer). Cost controls: max_results and max_pages bound discovery, target_contacts bounds contacts per company, target_roles skips paid lookups for non-matching contacts, and max_spend_usd caps your own vendor spend. Requires an APIFY_TOKEN and consumes Apify credits. Read only: it enriches and discovers, it writes nothing.",
     annotations: {
       title: "Run Prospect Engine",
-      readOnlyHint: true,
+      readOnlyHint: false,
       destructiveHint: false,
       idempotentHint: true,
       openWorldHint: true,
